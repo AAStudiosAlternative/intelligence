@@ -13,8 +13,9 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: "Missing message or identityInstruction" });
         }
 
-        // Simulate a response (replace this with your actual logic, e.g., calling an AI service)
-        const responseText = `${identityInstruction} I received your message: ${message}`;
+        // The identityInstruction tells us how to behave, but we won't include it in the response
+        // For now, we'll simulate a response as Elf AI Intelligence
+        const responseText = `I received your message: ${message}`; // Simple response without the identityInstruction
 
         // Return the response
         return res.status(200).json({ response: responseText });
