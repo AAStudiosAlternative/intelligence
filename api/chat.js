@@ -51,10 +51,4 @@ export default async (req, res) => {
 
     res.status(200).json({ response: assistantResponse });
   } catch (error) {
-    console.error("Error in Vercel API:", error.message);
-    if (error.message.includes("fetch")) {
-      return res.status(503).json({ error: "Assistant is slow—try again!" });
-    }
-    return res.status(500).json({ error: "Internal server error: " + error.message });
-  }
-};
+    console.error("Error in Vercel API:", error.message)
