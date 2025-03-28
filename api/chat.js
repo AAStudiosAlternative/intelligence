@@ -17,33 +17,33 @@ module.exports = async (req, res) => {
             return;
         }
 
-        // Hardcode the identity and response style in the prompt for DeepSeek V3
+        // Hardcode the identity and response style in the prompt for DeepSeek
         const prompt = `You are Elf AI Intelligence. Respond as Elf AI Intelligence and limit answers to 1-2 short sentences.\nUser: ${message}\nElf AI Intelligence:`;
 
-        // Call DeepSeek V3 API
+        // Call DeepSeek API (updated endpoint and model name)
         const deepSeekResponse = await axios.post(
-            "https://api.deepseek.com/v3/chat/completions", // DeepSeek V3 API endpoint
+            "https://api.deepseek.com/chat/completions", // Corrected endpoint
             {
-                model: "deepseek-v3", // Specify the model (adjust if needed)
+                model: "deepseek-chat", // Corrected model name for DeepSeek V3
                 messages: [
                     { role: "system", content: "You are Elf AI Intelligence. Respond as Elf AI Intelligence and limit answers to 1-2 short sentences." },
                     { role: "user", content: message }
                 ],
-                max_tokens: 150, // Limit the response length
-                temperature: 0.7 // Adjust creativity (optional)
+                max_tokens: 50,
+                temperature: 0.7
             },
             {
                 headers: {
-                    "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`, // API key from environment variable
+                    "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
                     "Content-Type": "application/json"
                 }
             }
         );
 
-        // Extract the response from DeepSeek V3
+        // Extract the response from DeepSeek
         const responseText = deepSeekResponse.data.choices[0].message.content.trim();
 
-        // Ensure the response identifies as Elf AI Intelligence (in case the API doesn't follow the prompt exactly)
+        // Ensure the response identifies as Elf AI Intelligence
         const finalResponse = responseText.startsWith("I am Elf AI Intelligence")
             ? responseText
             : `I am Elf AI Intelligence. ${responseText}`;
@@ -51,7 +51,12 @@ module.exports = async (req, res) => {
         // Return the response
         res.status(200).json({ response: finalResponse });
     } catch (error) {
-        console.error("Error in /api/chat:", error.response ? error.response.data : error.message);
+        // Log detailed error information
+        console.error("Error in /api/chat:", {
+            message: error.message,
+            response: error.response ? error.response.data : null,
+            status: error.response ? error.response.status : null
+        });
         res.status(500).json({ error: "Internal server error" });
     }
 };
