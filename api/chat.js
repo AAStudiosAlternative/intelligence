@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
                     { role: "system", content: req.body.identityInstruction },
                     ...req.body.messages
                 ],
-                max_tokens: 50,
+                max_tokens: 150,
                 temperature: 0.7
             },
             {
