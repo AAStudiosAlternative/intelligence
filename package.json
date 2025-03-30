@@ -1,9 +1,10 @@
 {
     "name": "elf-ai-intelligence",
     "version": "1.0.0",
+    "scripts": {
+        "start": "node api/chat.js"
+    },
     "dependencies": {
-        "express": "^4.18.2",
-        "axios": "^1.6.0",
-        "express-rate-limit": "^7.1.0"
+        "axios": "^1.7.2"
     }
 }
