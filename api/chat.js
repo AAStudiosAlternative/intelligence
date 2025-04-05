@@ -27,8 +27,8 @@ export default async function handler(req, res) {
                         { role: "system", content: identityInstruction },
                         ...messages // Include the conversation history
                     ],
-                    max_tokens: 30, // Kept low to prevent timeouts
-                    temperature: 0.5 // Kept low for faster responses
+                    max_tokens: 100, // Kept low to prevent timeouts
+                    temperature: 0.7 // Kept low for faster responses
                 }),
                 signal: controller.signal // Attach the AbortController signal
             });
